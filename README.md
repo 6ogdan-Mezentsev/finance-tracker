@@ -267,7 +267,7 @@ balance = totalIncome - totalExpense
 
 ## 9. ER-диаграмма
 
-![alt text](ooper.jpg)
+![alt text](er.jpg)
 
 ## Этап 2. Проектирование API и контрактов
 

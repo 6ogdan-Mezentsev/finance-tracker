@@ -1,0 +1,10 @@
+debug/
+release/
+bin/
+obj/
+log/
+
+.vscode/
+
+.DS_Store
+Thumbs.db

@@ -12,9 +12,8 @@ public class CategoryServiceTests
         using var dbContext = TestDb.CreateContext();
         var service = TestDb.CreateCategoryService(dbContext);
 
-        var result = await service.CreateAsync(new CreateCategoryRequest
+        var result = await service.CreateAsync(1, new CreateCategoryRequest
         {
-            UserId = 1,
             Name = "Food"
         });
 
@@ -29,9 +28,8 @@ public class CategoryServiceTests
         using var dbContext = TestDb.CreateContext();
         var service = TestDb.CreateCategoryService(dbContext);
 
-        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(new CreateCategoryRequest
+        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(1, new CreateCategoryRequest
         {
-            UserId = 1,
             Name = ""
         }));
     }
@@ -61,9 +59,8 @@ public class CategoryServiceTests
         var categoryId = dbContext.Categories.First().Id;
         var service = TestDb.CreateCategoryService(dbContext);
 
-        var result = await service.UpdateAsync(categoryId, new UpdateCategoryRequest
+        var result = await service.UpdateAsync(categoryId, 1, new UpdateCategoryRequest
         {
-            UserId = 1,
             Name = "Products"
         });
 
@@ -81,9 +78,8 @@ public class CategoryServiceTests
         var categoryId = dbContext.Categories.First().Id;
         var service = TestDb.CreateCategoryService(dbContext);
 
-        var result = await service.UpdateAsync(categoryId, new UpdateCategoryRequest
+        var result = await service.UpdateAsync(categoryId, 1, new UpdateCategoryRequest
         {
-            UserId = 1,
             Name = "Products"
         });
 

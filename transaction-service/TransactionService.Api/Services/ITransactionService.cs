@@ -5,13 +5,13 @@ namespace TransactionService.Api.Services;
 
 public interface ITransactionService
 {
-    Task<TransactionResponse> CreateAsync(CreateTransactionRequest request);
+    Task<TransactionResponse> CreateAsync(int userId, CreateTransactionRequest request);
 
     Task<List<TransactionResponse>> GetByUserAsync(int userId, DateTime? from, DateTime? to, TransactionType? type, int? categoryId);
 
     Task<TransactionResponse?> GetByIdAsync(int id, int userId);
 
-    Task<TransactionResponse?> UpdateAsync(int id, UpdateTransactionRequest request);
+    Task<TransactionResponse?> UpdateAsync(int id, int userId, UpdateTransactionRequest request);
 
     Task<bool> DeleteAsync(int id, int userId);
 

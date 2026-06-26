@@ -2,6 +2,7 @@ debug/
 release/
 bin/
 obj/
+.DS_Store
 .vs/
 log/
 

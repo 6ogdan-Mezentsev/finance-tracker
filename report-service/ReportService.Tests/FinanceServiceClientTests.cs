@@ -71,7 +71,7 @@ public class FinanceServiceClientTests
 
     private static HttpClient CreateClient(HttpMessageHandler handler)
     {
-        return new HttpClient(handler) { BaseAddress = new Uri("http://finance-service:8080") };
+        return new HttpClient(handler) { BaseAddress = new Uri("http://transaction-service:8080") };
     }
 
     private sealed class FakeHttpMessageHandler(Func<HttpRequestMessage, Task<HttpResponseMessage>> handler) : HttpMessageHandler

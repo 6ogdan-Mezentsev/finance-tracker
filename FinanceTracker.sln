@@ -8,6 +8,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "report-service", "report-service\ReportService.Api\report-service.csproj", "{A1C2D3E4-F5A6-7890-BCDE-F12345678901}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportService.Tests", "report-service\ReportService.Tests\ReportService.Tests.csproj", "{B2C3D4E5-F6A7-8901-CDEF-123456789012}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "auth-service\AuthService.csproj", "{BAA8EDAB-0B5B-4CAA-BAB4-AFE25D53D6C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Tests", "auth-service\AuthService.Tests\AuthService.Tests.csproj", "{9B419ED6-0F26-461F-96BF-C4C739F4F970}"

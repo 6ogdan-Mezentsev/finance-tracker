@@ -15,14 +15,14 @@ public class TransactionService : ITransactionService
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<TransactionResponse> CreateAsync(CreateTransactionRequest request)
+    public async Task<TransactionResponse> CreateAsync(int userId, CreateTransactionRequest request)
     {
-        ValidateTransactionData(request.UserId, request.CategoryId, request.Amount, request.Type);
-        await CheckCategoryAsync(request.CategoryId, request.UserId);
+        ValidateTransactionData(userId, request.CategoryId, request.Amount, request.Type);
+        await CheckCategoryAsync(request.CategoryId, userId);
 
         var transaction = new Transaction
         {
-            UserId = request.UserId,
+            UserId = userId,
             CategoryId = request.CategoryId,
             Amount = request.Amount,
             Type = request.Type,
@@ -51,12 +51,12 @@ public class TransactionService : ITransactionService
         return transaction == null ? null : ToResponse(transaction);
     }
 
-    public async Task<TransactionResponse?> UpdateAsync(int id, UpdateTransactionRequest request)
+    public async Task<TransactionResponse?> UpdateAsync(int id, int userId, UpdateTransactionRequest request)
     {
-        ValidateTransactionData(request.UserId, request.CategoryId, request.Amount, request.Type);
-        await CheckCategoryAsync(request.CategoryId, request.UserId);
+        ValidateTransactionData(userId, request.CategoryId, request.Amount, request.Type);
+        await CheckCategoryAsync(request.CategoryId, userId);
 
-        var transaction = await _transactionRepository.GetByIdForUserAsync(id, request.UserId);
+        var transaction = await _transactionRepository.GetByIdForUserAsync(id, userId);
         if (transaction == null)
         {
             return null;
@@ -70,7 +70,7 @@ public class TransactionService : ITransactionService
 
         await _transactionRepository.SaveAsync();
 
-        var updatedTransaction = await _transactionRepository.GetByIdForUserAsync(id, request.UserId);
+        var updatedTransaction = await _transactionRepository.GetByIdForUserAsync(id, userId);
         return updatedTransaction == null ? null : ToResponse(updatedTransaction);
     }
 

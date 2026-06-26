@@ -13,14 +13,14 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<CategoryResponse> CreateAsync(CreateCategoryRequest request)
+    public async Task<CategoryResponse> CreateAsync(int userId, CreateCategoryRequest request)
     {
-        ValidateUserId(request.UserId);
+        ValidateUserId(userId);
         ValidateName(request.Name);
 
         var category = new Category
         {
-            UserId = request.UserId,
+            UserId = userId,
             Name = request.Name.Trim()
         };
 
@@ -44,12 +44,12 @@ public class CategoryService : ICategoryService
         return category == null ? null : ToResponse(category);
     }
 
-    public async Task<CategoryResponse?> UpdateAsync(int id, UpdateCategoryRequest request)
+    public async Task<CategoryResponse?> UpdateAsync(int id, int userId, UpdateCategoryRequest request)
     {
-        ValidateUserId(request.UserId);
+        ValidateUserId(userId);
         ValidateName(request.Name);
 
-        var category = await _categoryRepository.GetByIdForUserAsync(id, request.UserId);
+        var category = await _categoryRepository.GetByIdForUserAsync(id, userId);
         if (category == null)
         {
             return null;

@@ -1071,3 +1071,28 @@ GET /api/reports/summary?startDate=2026-05-01&endDate=2026-05-31
 | 404 | Not Found             | Объект не найден                                     |
 | 409 | Conflict              | Конфликт бизнес-правил                               |
 | 500 | Internal Server Error | Непредвиденная ошибка сервера                        |
+
+---
+
+## 9. Запуск и Swagger
+
+Из корневой папки проекта:
+
+```bash
+docker compose up --build
+```
+
+После запуска доступны:
+
+| Сервис              | URL                           |
+| ------------------- | ----------------------------- |
+| API Gateway         | http://localhost:5004         |
+| Auth Swagger        | http://localhost:5001/swagger |
+| Transaction Swagger | http://localhost:5002/swagger |
+| Report Swagger      | http://localhost:5003/swagger |
+
+Для проверки защищенных ручек нужно получить JWT через `POST /api/users/login` в Auth Swagger, затем нажать `Authorize` в Swagger нужного сервиса и вставить токен в формате:
+
+```text
+Bearer jwt-token
+```

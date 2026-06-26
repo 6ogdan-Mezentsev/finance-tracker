@@ -2,9 +2,15 @@ debug/
 release/
 bin/
 obj/
+.vs/
 log/
 
 .vscode/
+TestResults/
+*.user
+*.suo
+*.db
+*.log
 
 .DS_Store
 Thumbs.db

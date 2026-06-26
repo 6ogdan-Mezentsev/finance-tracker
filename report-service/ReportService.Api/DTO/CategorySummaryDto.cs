@@ -1,9 +1,8 @@
-using System;
 using System.Text.Json.Serialization;
 
 namespace report_service.DTO
 {
-    public class TransactionDto
+    public class CategorySummaryDto
     {
         [JsonPropertyName("categoryId")]
         public int CategoryId { get; set; }
@@ -11,13 +10,10 @@ namespace report_service.DTO
         [JsonPropertyName("categoryName")]
         public string CategoryName { get; set; } = string.Empty;
 
+        [JsonPropertyName("type")]
+        public string Type { get; set; } = string.Empty;
+
         [JsonPropertyName("amount")]
         public decimal Amount { get; set; }
-
-        [JsonPropertyName("type")]
-        public string Type { get; set; } = string.Empty; // "INCOME" or "EXPENSE"
-
-        [JsonPropertyName("date")]
-        public DateTime Date { get; set; }
     }
 }

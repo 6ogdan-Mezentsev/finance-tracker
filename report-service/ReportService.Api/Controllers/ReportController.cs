@@ -52,8 +52,10 @@ namespace report_service.Controllers
             try
             {
                 var transactions = await _financeServiceClient.GetTransactionsForReportAsync(userId, startDate, endDate);
-                var summary = _reportEngine.GenerateSummary(transactions);
-                return Ok(summary);
+
+                var reportSummary = _reportEngine.GenerateSummary(startDate, endDate, transactions);
+
+                return Ok(reportSummary);
             }
             catch (Exception ex)
             {

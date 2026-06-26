@@ -14,9 +14,8 @@ public class TransactionServiceTests
         var category = await AddCategory(dbContext, 1, "Food");
         var service = TestDb.CreateTransactionService(dbContext);
 
-        var result = await service.CreateAsync(new CreateTransactionRequest
+        var result = await service.CreateAsync(1, new CreateTransactionRequest
         {
-            UserId = 1,
             CategoryId = category.Id,
             Amount = 500,
             Type = TransactionType.Expense,
@@ -36,9 +35,8 @@ public class TransactionServiceTests
         var category = await AddCategory(dbContext, 1, "Food");
         var service = TestDb.CreateTransactionService(dbContext);
 
-        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(new CreateTransactionRequest
+        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(1, new CreateTransactionRequest
         {
-            UserId = 1,
             CategoryId = category.Id,
             Amount = 0,
             Type = TransactionType.Expense,
@@ -53,9 +51,8 @@ public class TransactionServiceTests
         var category = await AddCategory(dbContext, 2, "Food");
         var service = TestDb.CreateTransactionService(dbContext);
 
-        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(new CreateTransactionRequest
+        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(1, new CreateTransactionRequest
         {
-            UserId = 1,
             CategoryId = category.Id,
             Amount = 500,
             Type = TransactionType.Expense,
@@ -69,9 +66,8 @@ public class TransactionServiceTests
         using var dbContext = TestDb.CreateContext();
         var service = TestDb.CreateTransactionService(dbContext);
 
-        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(new CreateTransactionRequest
+        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAsync(1, new CreateTransactionRequest
         {
-            UserId = 1,
             CategoryId = 999,
             Amount = 500,
             Type = TransactionType.Expense,
@@ -127,9 +123,8 @@ public class TransactionServiceTests
         var transaction = await AddTransaction(dbContext, 1, food.Id, 500, TransactionType.Expense, new DateTime(2026, 5, 10));
 
         var service = TestDb.CreateTransactionService(dbContext);
-        var result = await service.UpdateAsync(transaction.Id, new UpdateTransactionRequest
+        var result = await service.UpdateAsync(transaction.Id, 1, new UpdateTransactionRequest
         {
-            UserId = 1,
             CategoryId = transport.Id,
             Amount = 250,
             Type = TransactionType.Expense,
@@ -151,9 +146,8 @@ public class TransactionServiceTests
         var transaction = await AddTransaction(dbContext, 2, anotherUserCategory.Id, 500, TransactionType.Expense, new DateTime(2026, 5, 10));
 
         var service = TestDb.CreateTransactionService(dbContext);
-        var result = await service.UpdateAsync(transaction.Id, new UpdateTransactionRequest
+        var result = await service.UpdateAsync(transaction.Id, 1, new UpdateTransactionRequest
         {
-            UserId = 1,
             CategoryId = userCategory.Id,
             Amount = 250,
             Type = TransactionType.Expense,

@@ -1,30 +1,23 @@
 using System.Text;
+using AuthService.Data;
+using AuthService.Repositories;
+using AuthService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using TransactionService.Api.Data;
-using TransactionService.Api.Repositories;
-using TransactionService.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
-
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ITransactionService, TransactionService.Api.Services.TransactionService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthService, AuthService.Services.AuthService>();
 
 var jwtSecret = builder.Configuration["Jwt:Secret"];
 if (string.IsNullOrWhiteSpace(jwtSecret))
@@ -53,7 +46,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
     dbContext.Database.EnsureCreated();
 }
 

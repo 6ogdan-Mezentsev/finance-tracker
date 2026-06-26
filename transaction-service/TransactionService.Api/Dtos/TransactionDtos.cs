@@ -4,8 +4,6 @@ namespace TransactionService.Api.Dtos;
 
 public class CreateTransactionRequest
 {
-    public int UserId { get; set; }
-
     public int CategoryId { get; set; }
 
     public decimal Amount { get; set; }
@@ -19,8 +17,6 @@ public class CreateTransactionRequest
 
 public class UpdateTransactionRequest
 {
-    public int UserId { get; set; }
-
     public int CategoryId { get; set; }
 
     public decimal Amount { get; set; }

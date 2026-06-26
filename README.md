@@ -1096,3 +1096,41 @@ docker compose up --build
 ```text
 Bearer jwt-token
 ```
+
+Примеры запросов через Gateway:
+
+```bash
+curl -X POST http://localhost:5004/api/users/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test User","email":"test@example.com","password":"123456"}'
+```
+
+```bash
+curl -X POST http://localhost:5004/api/users/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"123456"}'
+```
+
+```bash
+curl -X POST http://localhost:5004/api/categories \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer jwt-token" \
+  -d '{"name":"Food"}'
+```
+
+```bash
+curl -X POST http://localhost:5004/api/transactions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer jwt-token" \
+  -d '{"categoryId":1,"amount":500,"type":"Expense","description":"Lunch","date":"2026-06-26T00:00:00"}'
+```
+
+```bash
+curl http://localhost:5004/api/categories \
+  -H "Authorization: Bearer jwt-token"
+```
+
+```bash
+curl "http://localhost:5004/api/reports/summary?startDate=2026-06-01&endDate=2026-06-30" \
+  -H "Authorization: Bearer jwt-token"
+```

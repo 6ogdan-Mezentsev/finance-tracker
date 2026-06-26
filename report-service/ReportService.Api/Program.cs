@@ -1,16 +1,44 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using report_service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            []
+        }
+    });
+});
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var secret = jwtSettings["Secret"] ?? "YourSuperSecretKeyHereWhichIsAtLeast32BytesLong!";
-var issuer = jwtSettings["Issuer"] ?? "auth-service";
-var audience = jwtSettings["Audience"] ?? "finance-tracker";
+var secret = jwtSettings["Secret"] ?? "finance-tracker-development-secret-key-change-me";
+var issuer = jwtSettings["Issuer"] ?? "FinanceTracker";
+var audience = jwtSettings["Audience"] ?? "FinanceTracker";
 
 builder.Services.AddAuthentication(options =>
 {
@@ -35,11 +63,17 @@ builder.Services.AddScoped<IReportEngine, ReportEngine>();
 
 builder.Services.AddHttpClient<IFinanceServiceClient, FinanceServiceClient>(client =>
 {
-    var financeServiceUrl = builder.Configuration["FinanceService:BaseUrl"] ?? "http://finance-service:8080";
+    var financeServiceUrl = builder.Configuration["FinanceService:BaseUrl"] ?? "http://transaction-service:8080";
     client.BaseAddress = new Uri(financeServiceUrl);
 });
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseRouting();
 

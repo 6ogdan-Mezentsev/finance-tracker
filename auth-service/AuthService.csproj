@@ -8,6 +8,9 @@
 
     <ItemGroup>
       <Compile Remove="AuthService.Tests/**/*.cs" />
+      <Content Remove="AuthService.Tests/**" />
+      <EmbeddedResource Remove="AuthService.Tests/**" />
+      <None Remove="AuthService.Tests/**" />
     </ItemGroup>
 
     <ItemGroup>
